@@ -1,84 +1,281 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Цены по Таджикистану</title>
-<meta name="theme-color" content="#0f7a4f">
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Цены TJ — сравнение цен в магазинах Таджикистана</title>
+<meta name="description" content="Сравните цены на продукты, технику и блюда в магазинах Таджикистана: Би1, Пайкар, Magnit.tj, 8 MART, Alif Shop и других.">
+<meta name="theme-color" content="#0b5e3c">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Цены TJ">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="description" content="Поиск цен по магазинам Таджикистана: продукты, техника, объявления, рестораны.">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
-:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1b;--muted:#6b6a66;--line:#e4e2dc;--accent:#0f7a4f;--accent-ink:#fff;--ours:#c2410c;--ours-bg:#fff1e8;--best:#fff4d6;--best-line:#e8c35a;--err:#b3261e}
-@media (prefers-color-scheme:dark){:root{--bg:#141412;--card:#1e1e1b;--ink:#eeece6;--muted:#a3a19a;--line:#33322e;--accent:#3fbf86;--accent-ink:#0b1c14;--ours:#fb923c;--ours-bg:#2a1a10;--best:#2d2614;--best-line:#8a6d1f;--err:#ff8a80}}
+/* Макет: зелёная шапка-витрина с поиском → лента результатов карточками → блок магазинов → подвал */
+:root{
+  --brand:#0b5e3c; --brand-2:#0f7a4f; --brand-ink:#ffffff;
+  --gold:#f2a516; --gold-ink:#3a2700;
+  --bg:#f3f5f2; --surface:#ffffff; --surface-2:#eaefe9;
+  --ink:#14211b; --muted:#5d6b63; --line:#dbe3dc;
+  --err:#b42318;
+  --display:"Unbounded", "Manrope", system-ui, sans-serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#0d1411; --surface:#16201b; --surface-2:#1d2a23; --ink:#e7eee9; --muted:#9aaba1; --line:#26352d; --brand:#0a4a30; --err:#ff8a80; color-scheme:dark }
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 16px 10px;padding-top:max(14px, env(safe-area-inset-top))}
-.wrap{max-width:1100px;margin:0 auto}
-h1{font-size:18px;margin:0 0 10px;letter-spacing:-.01em}
-h1 span{color:var(--muted);font-weight:400}
-form{display:flex;gap:8px}
-input[type=search]{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
-button{font:inherit;font-weight:600;padding:0 18px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
-button:disabled{opacity:.55;cursor:default}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.tab{font-size:13px;padding:5px 12px;border:1px solid var(--line);border-radius:99px;background:var(--card);cursor:pointer;user-select:none}
-.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.tools{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
-.tools label{display:flex;gap:6px;align-items:center;cursor:pointer}
-select{font:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
-main{padding:14px 16px 40px}
-.status{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.chip{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:99px;background:var(--card);cursor:pointer;user-select:none}
-.chip.off{opacity:.4;text-decoration:line-through}
-.chip.err{color:var(--err);border-color:var(--err)}
-.chip.ours{border-color:var(--ours);color:var(--ours);font-weight:600}
-.sum{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:14px}
-.box{border-radius:12px;padding:10px 14px;font-size:14px}
-.box b{font-size:16px}
-.box small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
-.box.best{background:var(--best);border:1px solid var(--best-line)}
-.box.ours{background:var(--ours-bg);border:1px solid var(--ours)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:inherit;text-decoration:none;transition:transform .12s}
-.card:hover{transform:translateY(-2px)}
-.card.ours{border:2px solid var(--ours)}
-.badge{position:absolute;top:8px;left:8px;background:var(--ours);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px}
-.ph{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body)}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:8px}
+[hidden]{display:none!important}
+.container{max-width:1160px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left));padding-right:max(16px, env(safe-area-inset-right))}
+
+/* ---- шапка ---- */
+.top{background:var(--brand);color:var(--brand-ink);padding-top:env(safe-area-inset-top)}
+.nav{display:flex;align-items:center;gap:16px;min-height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.logo img{width:36px;height:36px;border-radius:9px;background:#fff}
+.logo b{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em}
+.menu{display:flex;gap:4px;margin-left:12px;flex-wrap:wrap}
+.menu button{background:none;border:0;color:rgba(255,255,255,.82);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;font-size:15px}
+.menu button:hover{background:rgba(255,255,255,.1);color:#fff}
+.menu button.on{background:rgba(255,255,255,.16);color:#fff}
+.install{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--gold);color:var(--gold-ink);border:0;border-radius:12px;padding:9px 14px;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.install svg{width:18px;height:18px}
+
+/* ---- витрина с поиском ---- */
+.hero{background:linear-gradient(180deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;padding-block:28px 34px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(24px,4.4vw,40px);line-height:1.15;margin:0 0 8px;text-wrap:balance;max-width:20ch}
+.hero p{margin:0 0 22px;color:rgba(255,255,255,.85);max-width:60ch}
+.search{display:flex;gap:8px;background:#fff;border-radius:18px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.search svg{width:22px;height:22px;color:#6c7a72;flex-shrink:0;align-self:center;margin-left:10px}
+.search input{flex:1;min-width:0;border:0;outline:0;background:none;color:#14211b;font-size:17px;padding:12px 6px}
+.search input::placeholder{color:#8a978f}
+.search button{border:0;background:var(--brand);color:#fff;border-radius:13px;padding:0 22px;font-weight:800;font-size:16px;cursor:pointer}
+.search button:disabled{opacity:.6;cursor:default}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.quick span{font-size:14px;color:rgba(255,255,255,.75)}
+.quick button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:99px;padding:6px 13px;font-size:14px;font-weight:600;cursor:pointer}
+.quick button:hover{background:rgba(255,255,255,.24)}
+
+/* ---- результаты ---- */
+main{padding-block:24px 48px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.found{font-weight:700;font-size:18px}
+.found small{display:block;font-weight:500;font-size:14px;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
+.controls label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.controls select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:14px}
+.stores{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;scrollbar-width:thin}
+.chip{flex-shrink:0;display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 13px;font-size:14px;font-weight:600;cursor:pointer;user-select:none}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c,#999)}
+.chip em{font-style:normal;color:var(--muted);font-weight:500}
+.chip.off{opacity:.45}
+.chip.err{color:var(--muted);cursor:default}
+.chip.err em{color:var(--err)}
+
+.best{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px 14px 22px;margin-bottom:18px;position:relative;overflow:hidden;text-decoration:none}
+.best::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--gold)}
+.best img{width:64px;height:64px;object-fit:contain;background:#fff;border-radius:10px;flex-shrink:0}
+.best .t{min-width:0}
+.best .lbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#a36b00}
+.best .p{font-family:var(--display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.best .n{color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;transition:transform .15s, box-shadow .15s;position:relative;min-width:0}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,40,25,.12)}
+.ph{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;padding:12px}
 .ph img{max-width:100%;max-height:100%;object-fit:contain}
-.ph .no{color:#aaa;font-size:12px}
-.body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
-.price{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
-.price small{font-size:12px;font-weight:400;color:var(--muted)}
-.title{font-size:13px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.store{margin-top:auto;font-size:12px;color:var(--muted)}
-.store .oos{color:var(--err)}
-.empty{color:var(--muted);text-align:center;padding:40px 10px}
-.more{margin-top:22px;font-size:13px;color:var(--muted)}
-.more a{color:var(--accent);margin-right:12px}
-@media (max-width:480px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}.price{font-size:16px}}
-</style></head><body>
-<header><div class="wrap">
-  <h1>Цены по Таджикистану <span>· онлайн-площадки</span></h1>
-  <form id="f"><input id="q" type="search" placeholder="Например: молоко, iPhone 16, ролл" autofocus>
-  <button id="go">Найти</button></form>
-  <div class="tabs" id="tabs"></div>
-  <div class="tools">
-    <label><input type="checkbox" id="strict" checked> только точные совпадения</label>
-    <label><input type="checkbox" id="stock"> только в наличии</label>
-    <label>Сортировка <select id="sort"><option value="asc">сначала дешёвые</option><option value="desc">сначала дорогие</option><option value="store">по магазину</option></select></label>
+.ph .no{color:#a8b3ac;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ph .no svg{width:34px;height:34px}
+.tag{position:absolute;top:10px;left:10px;background:var(--gold);color:var(--gold-ink);font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px;letter-spacing:.02em}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.price{font-family:var(--display);font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.price small{font-family:var(--body);font-size:13px;font-weight:600;color:var(--muted)}
+.title{font-size:14px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{margin-top:auto;padding-top:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.shop{display:flex;align-items:center;gap:6px;font-weight:700;color:var(--ink);min-width:0}
+.shop i{width:8px;height:8px;border-radius:50%;background:var(--c,#999);flex-shrink:0}
+.oos{color:var(--err);font-weight:600}
+.go{color:var(--brand-2);font-weight:700;white-space:nowrap}
+@media (prefers-color-scheme:dark){ .go{color:#4cd394} .best .lbl{color:var(--gold)} }
+
+.skel .ph{background:var(--surface-2)}
+.skel .bar{height:14px;border-radius:7px;background:var(--surface-2)}
+@keyframes pulse{50%{opacity:.5}}
+.skel{animation:pulse 1.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.skel{animation:none}.card{transition:none}}
+
+.empty{text-align:center;color:var(--muted);padding:40px 16px}
+.empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
+.more{margin-top:26px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.more a{color:var(--brand-2);font-weight:700}
+
+/* ---- магазины ---- */
+.section-title{font-family:var(--display);font-weight:700;font-size:20px;margin:0 0 14px}
+.shops{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.shopcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:center}
+.shopcard .dot{width:38px;height:38px;border-radius:11px;background:var(--c);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.shopcard b{display:block}
+.shopcard span{font-size:13px;color:var(--muted)}
+.howto{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.howto div{background:var(--surface-2);border-radius:14px;padding:16px}
+.howto b{display:block;margin-bottom:4px}
+.howto p{margin:0;font-size:14px;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding-block:22px calc(22px + env(safe-area-inset-bottom));font-size:13px;color:var(--muted)}
+
+/* ---- окно подсказки iPhone ---- */
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:50;padding:16px}
+.sheet > div{background:var(--surface);color:var(--ink);border-radius:20px;padding:20px;max-width:420px;width:100%;margin-bottom:env(safe-area-inset-bottom)}
+.sheet h3{margin:0 0 8px;font-family:var(--display);font-size:18px}
+.sheet ol{margin:0 0 14px;padding-left:20px}
+.sheet button{width:100%;border:0;background:var(--brand-2);color:#fff;border-radius:12px;padding:12px;font-weight:800;cursor:pointer}
+
+@media (max-width:720px){
+  .menu{display:none}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .price{font-size:18px}
+  .body{padding:10px 11px 12px}
+  .go{display:none}
+  .hero{padding-block:20px 26px}
+  .search button{padding:0 16px}
+  .mtabs{display:flex}
+}
+.mtabs{display:none;gap:8px;overflow-x:auto;margin:-6px 0 16px;padding-bottom:2px}
+.mtabs button{flex-shrink:0;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px;font-weight:700;cursor:pointer}
+.mtabs button.on{background:var(--brand-2);border-color:var(--brand-2);color:#fff}
+@media (display-mode:standalone){ .install{display:none!important} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="container nav">
+    <a class="logo" href="./"><img src="icon-192.png" alt=""><b>Цены TJ</b></a>
+    <nav class="menu" id="menu" aria-label="Разделы"></nav>
+    <button class="install" id="install" type="button" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+      Установить
+    </button>
   </div>
-</div></header>
-<main><div class="wrap">
-  <div id="status" class="status"></div>
-  <div id="sum" class="sum"></div>
-  <div id="grid" class="grid"></div>
-  <div id="msg" class="empty">Введите название товара или блюда и нажмите «Найти».</div>
-  <div id="more" class="more"></div>
-</div></main>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Сравните цены в магазинах Таджикистана</h1>
+    <p>Один поиск — цены сразу в Би1, Пайкаре, Magnit.tj, 8 MART, Alif Shop и меню ресторанов. В сомони, с фото и ссылкой на товар.</p>
+    <form class="search" id="f" role="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Что ищем? Например: молоко" autocomplete="off" enterkeyhint="search">
+      <button id="go" type="submit">Найти</button>
+    </form>
+    <div class="quick" id="quick"><span>Часто ищут:</span></div>
+  </div>
+</section>
+
+<main class="container">
+  <div class="mtabs" id="mtabs"></div>
+  <div id="results" hidden>
+    <div class="toolbar">
+      <div class="found" id="found"></div>
+      <div class="controls">
+        <label><input type="checkbox" id="strict" checked> точное совпадение</label>
+        <label><input type="checkbox" id="stock"> в наличии</label>
+        <select id="sort" aria-label="Сортировка">
+          <option value="asc">Сначала дешёвые</option>
+          <option value="desc">Сначала дорогие</option>
+          <option value="store">По магазинам</option>
+        </select>
+      </div>
+    </div>
+    <div class="stores" id="stores"></div>
+    <div id="best"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="msg" hidden></div>
+    <div class="more" id="more"></div>
+  </div>
+
+  <section id="intro">
+    <h2 class="section-title">Где ищем</h2>
+    <div class="shops" id="shops"></div>
+    <div class="howto">
+      <div><b>Цены в реальном времени</b><p>Каждый поиск заново опрашивает сайты магазинов, поэтому цены всегда текущие.</p></div>
+      <div><b>Лучшая цена — сверху</b><p>Результаты отсортированы от дешёвых, самое выгодное предложение выделено.</p></div>
+      <div><b>Как приложение</b><p>Нажмите «Установить» — значок появится на главном экране телефона.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">Цены TJ · цены берутся с сайтов магазинов в момент поиска и могут отличаться от цен в кассе.</div>
+</footer>
+
+<div class="sheet" id="ios" hidden>
+  <div>
+    <h3>Установить на iPhone</h3>
+    <ol>
+      <li>Нажмите кнопку «Поделиться» внизу Safari.</li>
+      <li>Выберите «На экран Домой».</li>
+      <li>Нажмите «Добавить».</li>
+    </ol>
+    <button type="button" id="iosOk">Понятно</button>
+  </div>
+</div>
+
 <script>
 var API = 'https://script.google.com/macros/s/AKfycbwEhjmRWCCHYSKtuDf4ZmS382LCnvqU65C-FiANFDFmAbPT0q4NbYyZP-97HxWLKyYE1Q/exec';
+var CATS = ['Все','Продукты','Товары','Объявления','Рестораны'];
+var QUICK = ['молоко','сахар','рис','масло','яйца','iPhone 16','холодильник','ролл'];
+var SHOPS = [
+  {key:'bi1',    name:'Би1',        cat:'Продукты',   c:'#7aa61c', l:'Б1'},
+  {key:'paykar', name:'Пайкар',     cat:'Продукты',   c:'#0f7a4f', l:'П'},
+  {key:'magnit', name:'Magnit.tj',  cat:'Продукты',   c:'#d63a2f', l:'M'},
+  {key:'mart8',  name:'8 MART',     cat:'Продукты',   c:'#2e5e3a', l:'8'},
+  {key:'alif',   name:'Alif Shop',  cat:'Товары',     c:'#e09a00', l:'A'},
+  {key:'somon',  name:'Somon.tj',   cat:'Объявления', c:'#2f6fd6', l:'S'},
+  {key:'toki',   name:'TOKI (суши)',cat:'Рестораны',  c:'#6b3fa0', l:'T'}
+];
+var COLOR = {}; SHOPS.forEach(function(s){ COLOR[s.key]=s.c; });
+var data = null, hidden = {}, lastQ = '', cat = 'Все';
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function norm(s){ return String(s).toLowerCase().replace(/ё/g,'е'); }
+function fmt(n){ return n.toLocaleString('ru-RU',{minimumFractionDigits:n%1?2:0, maximumFractionDigits:2}); }
+function plural(n,a,b,c){ var m=n%10, h=n%100; return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<10||h>=20))?b:c; }
+var NOPHOTO = '<span class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 9"/></svg>нет фото</span>';
+
+/* ---- разделы: меню в шапке (компьютер) и вкладки над результатами (телефон) ---- */
+function drawMenu(){
+  var html = CATS.map(function(c){ return '<button type="button" class="'+(c===cat?'on':'')+'" data-c="'+c+'">'+c+'</button>'; }).join('');
+  $('menu').innerHTML = html; $('mtabs').innerHTML = html;
+  Array.prototype.forEach.call(document.querySelectorAll('#menu button, #mtabs button'), function(b){
+    b.onclick = function(){ cat = b.getAttribute('data-c'); drawMenu(); render(); };
+  });
+}
+drawMenu();
+
+/* ---- быстрые запросы и магазины ---- */
+$('quick').insertAdjacentHTML('beforeend', QUICK.map(function(q){ return '<button type="button">'+esc(q)+'</button>'; }).join(''));
+Array.prototype.forEach.call($('quick').querySelectorAll('button'), function(b){
+  b.onclick = function(){ $('q').value = b.textContent; search(b.textContent); };
+});
+$('shops').innerHTML = SHOPS.map(function(s){
+  return '<div class="shopcard"><span class="dot" style="--c:'+s.c+'">'+esc(s.l)+'</span><div><b>'+esc(s.name)+'</b><span>'+esc(s.cat)+'</span></div></div>';
+}).join('');
+
+/* ---- поиск ---- */
 function loadPrices(q, ok, fail){
   var url = API + '?q=' + encodeURIComponent(q);
   fetch(url, {credentials:'omit'}).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
@@ -90,104 +287,115 @@ function jsonp(url, ok, fail){
   sc.onerror = function(){ if(!done){ delete window[cb]; fail(); } };
   sc.src = url + '&callback=' + cb; document.body.appendChild(sc);
 }
-var CATS = ['Все','Продукты','Товары','Объявления','Рестораны'];
-var data = null, hidden = {}, lastQ = '', cat = 'Все';
-var $ = function(id){ return document.getElementById(id); };
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-function norm(s){ return String(s).toLowerCase().replace(/ё/g,'е'); }
-function fmt(n){ return n.toLocaleString('ru-RU',{minimumFractionDigits: n%1?2:0, maximumFractionDigits:2}) + ' сом.'; }
-
-function drawTabs(){
-  $('tabs').innerHTML = CATS.map(function(c){ return '<span class="tab'+(c===cat?' on':'')+'" data-c="'+c+'">'+c+'</span>'; }).join('');
-  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
-    t.onclick = function(){ cat = t.getAttribute('data-c'); drawTabs(); render(); };
+function skeleton(){
+  var s=''; for(var i=0;i<8;i++) s+='<div class="card skel"><div class="ph"></div><div class="body"><div class="bar" style="width:45%;height:20px"></div><div class="bar"></div><div class="bar" style="width:70%"></div></div></div>';
+  return s;
+}
+function search(q){
+  q = String(q||'').trim(); if(!q) return;
+  lastQ = q; hidden = {}; data = null;
+  $('results').hidden = false; $('intro').hidden = true;
+  $('go').disabled = true;
+  $('found').innerHTML = 'Ищем «'+esc(q)+'»…<small>Опрашиваем магазины, обычно 5–10 секунд</small>';
+  $('stores').innerHTML = ''; $('best').innerHTML = ''; $('more').innerHTML = ''; $('msg').hidden = true;
+  $('grid').innerHTML = skeleton();
+  try { history.replaceState(null, '', '#' + encodeURIComponent(q)); } catch(e){}
+  $('results').scrollIntoView({behavior:'smooth', block:'start'});
+  loadPrices(q, function(r){ $('go').disabled=false; data=r; render(); }, function(){
+    $('go').disabled=false; $('grid').innerHTML='';
+    $('found').textContent='Не удалось получить цены';
+    $('msg').hidden=false; $('msg').innerHTML='<b>Нет связи с магазинами</b>Проверьте интернет и нажмите «Найти» ещё раз.';
   });
 }
-drawTabs();
-
-$('f').addEventListener('submit', function(e){
-  e.preventDefault();
-  var q = $('q').value.trim(); if(!q) return;
-  lastQ = q; $('go').disabled = true; $('grid').innerHTML=''; $('sum').innerHTML=''; $('status').innerHTML=''; $('more').innerHTML='';
-  $('msg').style.display='block'; $('msg').textContent='Ищу «'+q+'» по магазинам… (обычно 5–15 секунд)';
-  loadPrices(q, function(r){ $('go').disabled=false; data=r; render(); },
-    function(err){ $('go').disabled=false; $('msg').textContent='Не удалось получить цены. Проверьте интернет и нажмите «Найти» ещё раз.'; });
-});
+$('f').addEventListener('submit', function(e){ e.preventDefault(); $('q').blur(); search($('q').value); });
 ['strict','stock','sort'].forEach(function(id){ $(id).addEventListener('change', render); });
 
 function render(){
   if(!data) return;
   var words = norm(lastQ).split(/\s+/).filter(Boolean);
   var strict = $('strict').checked, stock = $('stock').checked;
-  var items = data.items.filter(function(it){
-    if(hidden[it.storeKey]) return false;
+  var pool = data.items.filter(function(it){
     if(cat!=='Все' && it.cat!==cat) return false;
     if(stock && it.inStock===false) return false;
     if(!strict) return true;
     var t = norm(it.title);
     return words.every(function(w){ return t.indexOf(w) >= 0; });
   });
+  var items = pool.filter(function(it){ return !hidden[it.storeKey]; });
   var s = $('sort').value;
   items.sort(function(a,b){
     if(s==='desc') return b.price-a.price;
-    if(s==='store') return (b.ours-a.ours) || a.store.localeCompare(b.store) || a.price-b.price;
+    if(s==='store') return a.store.localeCompare(b.store) || a.price-b.price;
     return a.price-b.price;
   });
 
+  var counts = {}; pool.forEach(function(it){ counts[it.storeKey]=(counts[it.storeKey]||0)+1; });
   var srcs = data.sources.filter(function(x){ return cat==='Все' || x.cat===cat; });
-  srcs.sort(function(a,b){ return b.ours-a.ours; });
-  $('status').innerHTML = srcs.map(function(src){
-    var cls = 'chip' + (src.ours?' ours':'') + (src.error?' err':'') + (hidden[src.key]?' off':'');
-    var label = (src.ours?'★ ':'') + esc(src.name) + (src.ours?' (наш)':'') + (src.error ? ' — не ответил' : ' · ' + src.count);
-    return '<span class="'+cls+'" data-k="'+src.key+'" title="'+esc(src.error||'Нажмите, чтобы скрыть/показать')+'">'+label+'</span>';
+  $('stores').innerHTML = srcs.map(function(src){
+    if(src.error) return '<span class="chip err" style="--c:'+(COLOR[src.key]||'#999')+'"><i></i>'+esc(src.name)+' <em>не ответил</em></span>';
+    return '<button type="button" class="chip'+(hidden[src.key]?' off':'')+'" data-k="'+src.key+'" style="--c:'+(COLOR[src.key]||'#999')+'"><i></i>'+esc(src.name)+' <em>'+(counts[src.key]||0)+'</em></button>';
   }).join('');
-  Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(ch){
+  Array.prototype.forEach.call($('stores').querySelectorAll('button.chip'), function(ch){
     ch.onclick = function(){ var k=ch.getAttribute('data-k'); hidden[k]=!hidden[k]; render(); };
   });
 
-  var sum = '';
+  var shopsN = {}; items.forEach(function(x){ shopsN[x.storeKey]=1; });
+  var nShops = Object.keys(shopsN).length;
+  $('found').innerHTML = esc(lastQ) + ': ' + items.length + ' ' + plural(items.length,'предложение','предложения','предложений') +
+    '<small>' + (items.length ? 'в ' + nShops + ' ' + plural(nShops,'магазине','магазинах','магазинах') + ' · цены на сейчас' : 'попробуйте другой запрос') + '</small>';
+
+  var bestItem = null;
   if(items.length){
-    var min = items.reduce(function(m,x){ return x.price<m.price?x:m; }, items[0]);
-    var ours = items.filter(function(x){ return x.ours; });
-    var others = items.filter(function(x){ return !x.ours; });
-    sum += '<div class="box best">Дешевле всего: <b>'+fmt(min.price)+'</b> — '+esc(min.store)+(min.ours?' (наш магазин)':'')+
-      '<small>'+esc(min.title)+'</small></div>';
-    if(ours.length){
-      var om = ours.reduce(function(m,x){ return x.price<m.price?x:m; }, ours[0]);
-      var cheaper = others.filter(function(x){ return x.price < om.price; }).length;
-      sum += '<div class="box ours">★ Наш магазин ('+esc(om.store)+'): от <b>'+fmt(om.price)+'</b>, найдено '+ours.length+
-        '<small>'+(others.length ? (cheaper ? 'У конкурентов дешевле: '+cheaper+' из '+others.length+' предложений' : 'У конкурентов дешевле не найдено') : 'У конкурентов совпадений нет')+'</small></div>';
-    } else if(data.ourStore && !hidden[data.ourStore] && (cat==='Все'||cat==='Продукты')){
-      sum += '<div class="box ours">★ В нашем магазине такого товара не найдено</div>';
-    }
-    $('msg').style.display='none';
+    bestItem = items.reduce(function(m,x){ return x.price<m.price?x:m; }, items[0]);
+    $('best').innerHTML = '<a class="best" href="'+esc(bestItem.url)+'" target="_blank" rel="noopener">'+
+      (bestItem.image?'<img src="'+esc(bestItem.image)+'" alt="" referrerpolicy="no-referrer" onerror="this.remove()">':'')+
+      '<div class="t"><div class="lbl">Лучшая цена · '+esc(bestItem.store)+'</div><div class="p">'+fmt(bestItem.price)+' сом.</div><div class="n">'+esc(bestItem.title)+'</div></div></a>';
+    $('msg').hidden = true;
   } else {
-    $('msg').style.display='block';
-    $('msg').textContent = data.items.length && strict
-      ? 'Точных совпадений нет. Снимите галочку «только точные совпадения» или выберите раздел «Все».'
-      : 'Ничего не найдено. Попробуйте написать название короче или иначе (по-русски / латиницей).';
+    $('best').innerHTML = '';
+    $('msg').hidden = false;
+    $('msg').innerHTML = (data.items.length && strict)
+      ? '<b>Точных совпадений нет</b>Снимите галочку «точное совпадение» или выберите раздел «Все».'
+      : '<b>Ничего не нашли</b>Попробуйте написать короче или иначе — например, по-русски или латиницей.';
   }
-  $('sum').innerHTML = sum;
 
   $('grid').innerHTML = items.map(function(it){
-    var img = it.image ? '<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(it.image)+'" alt="" onerror="this.outerHTML=\'<span class=no>нет фото</span>\'">' : '<span class="no">нет фото</span>';
-    return '<a class="card'+(it.ours?' ours':'')+'" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+
-      (it.ours?'<span class="badge">★ Наш магазин</span>':'')+
+    var img = it.image ? '<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(it.image)+'" alt="" onerror="this.parentNode.innerHTML=NOPHOTO">' : NOPHOTO;
+    return '<a class="card" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+
+      (it===bestItem?'<span class="tag">Лучшая цена</span>':'')+
       '<div class="ph">'+img+'</div><div class="body">'+
-      '<div class="price">'+fmt(it.price)+(it.unit && it.unit!=='шт'?' <small>/ '+esc(it.unit)+'</small>':'')+'</div>'+
+      '<div class="price">'+fmt(it.price)+' <small>сом.'+(it.unit && it.unit!=='шт'?' / '+esc(it.unit):'')+'</small></div>'+
       '<div class="title">'+esc(it.title)+'</div>'+
-      '<div class="store">'+esc(it.store)+(it.note?' · '+esc(it.note):'')+(it.inStock===false?' · <span class="oos">нет в наличии</span>':'')+'</div></div></a>';
+      '<div class="meta"><span class="shop" style="--c:'+(COLOR[it.storeKey]||'#999')+'"><i></i>'+esc(it.store)+'</span>'+
+      (it.inStock===false?'<span class="oos">нет в наличии</span>':'<span class="go">Открыть →</span>')+'</div>'+
+      '</div></a>';
   }).join('');
 
   var q = encodeURIComponent(lastQ);
-  $('more').innerHTML = 'Проверить вручную также: '+
+  $('more').innerHTML = 'Проверить вручную: '+
     '<a target="_blank" rel="noopener" href="https://www.wildberries.tj/catalog/0/search.aspx?search='+q+'">Wildberries</a>'+
     '<a target="_blank" rel="noopener" href="https://www.ozon.ru/search/?text='+q+'">Ozon</a>'+
     '<a target="_blank" rel="noopener" href="https://lalafo.tj/tajikistan/q-'+q+'">Lalafo</a>'+
-    '<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+q+'+цена+Душанбе">Google</a>';
+    '<a target="_blank" rel="noopener" href="https://somon.tj/search/?q='+q+'">Somon.tj</a>';
 }
-</script>
-<script>
+
+/* ---- поиск по ссылке вида ...#молоко ---- */
+(function(){ var h=''; try { h = decodeURIComponent((location.hash||'').slice(1)); } catch(e){} if(h){ $('q').value = h; search(h); } })();
+
+/* ---- установка приложения ---- */
+var deferred = null;
+var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred = e; if(!standalone) $('install').hidden = false; });
+if(isIOS && !standalone) $('install').hidden = false;
+$('install').addEventListener('click', function(){
+  if(deferred){ deferred.prompt(); deferred.userChoice.then(function(){ deferred = null; $('install').hidden = true; }); }
+  else if(isIOS){ $('ios').hidden = false; }
+});
+$('iosOk').addEventListener('click', function(){ $('ios').hidden = true; });
+window.addEventListener('appinstalled', function(){ $('install').hidden = true; });
+
 if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
 </script>
-</body></html>
+</body>
+</html>
