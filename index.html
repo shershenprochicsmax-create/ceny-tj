@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Мониторинг — сравнение цен в магазинах Таджикистана</title>
-<meta name="description" content="Сравните цены на продукты, технику и товары в магазинах Таджикистана: Би1, Пайкар, Magnit.tj, 8 MART, Alif Shop и других.">
+<meta name="description" content="Сравните цены на продукты, технику и товары в Таджикистане: Би1, Пайкар, Magnit.tj, 8 MART, Alif Shop, Somon.tj, Telegram-каналы.">
 <meta name="theme-color" content="#0b5e3c">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -175,7 +175,7 @@ footer{border-top:1px solid var(--line);padding-block:22px calc(22px + env(safe-
 <section class="hero">
   <div class="container">
     <h1>Сравните цены в магазинах Таджикистана</h1>
-    <p>Один поиск — цены сразу в Би1, Пайкаре, Magnit.tj, 8 MART, Alif Shop и на Somon.tj. В сомони, с фото и ссылкой на товар.</p>
+    <p>Один поиск — цены сразу в Би1, Пайкаре, Magnit.tj, 8 MART, Alif Shop, на Somon.tj и в Telegram-каналах продаж. В сомони, с фото и ссылкой на товар.</p>
     <form class="search" id="f" role="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       <input id="q" type="search" placeholder="Что ищем? Например: молоко" autocomplete="off" enterkeyhint="search">
@@ -236,7 +236,7 @@ footer{border-top:1px solid var(--line);padding-block:22px calc(22px + env(safe-
 
 <script>
 var API = 'https://script.google.com/macros/s/AKfycbwEhjmRWCCHYSKtuDf4ZmS382LCnvqU65C-FiANFDFmAbPT0q4NbYyZP-97HxWLKyYE1Q/exec';
-var CATS = ['Все','Продукты','Товары','Объявления'];
+var CATS = ['Все','Продукты','Товары','Объявления','Telegram'];
 var QUICK = ['молоко','сахар','рис','масло','яйца','iPhone 16','холодильник','телевизор'];
 var SHOPS = [
   {key:'bi1',    name:'Би1',        cat:'Продукты',   c:'#7aa61c', l:'Б1'},
@@ -244,7 +244,9 @@ var SHOPS = [
   {key:'magnit', name:'Magnit.tj',  cat:'Продукты',   c:'#d63a2f', l:'M'},
   {key:'mart8',  name:'8 MART',     cat:'Продукты',   c:'#2e5e3a', l:'8'},
   {key:'alif',   name:'Alif Shop',  cat:'Товары',     c:'#e09a00', l:'A'},
-  {key:'somon',  name:'Somon.tj',   cat:'Объявления', c:'#2f6fd6', l:'S'}
+  {key:'somon',  name:'Somon.tj',   cat:'Объявления', c:'#2f6fd6', l:'S'},
+  {key:'telegram', name:'Telegram-каналы', cat:'Telegram', c:'#229ED9', l:'TG'},
+  {key:'web',    name:'Весь интернет', cat:'Интернет', c:'#fb542b', l:'W'}
 ];
 var COLOR = {}; SHOPS.forEach(function(s){ COLOR[s.key]=s.c; });
 var data = null, hidden = {}, lastQ = '', cat = 'Все';
@@ -270,7 +272,7 @@ $('quick').insertAdjacentHTML('beforeend', QUICK.map(function(q){ return '<butto
 Array.prototype.forEach.call($('quick').querySelectorAll('button'), function(b){
   b.onclick = function(){ $('q').value = b.textContent; search(b.textContent); };
 });
-$('shops').innerHTML = SHOPS.map(function(s){
+$('shops').innerHTML = SHOPS.filter(function(s){ return s.key!=='web'; }).map(function(s){
   return '<div class="shopcard"><span class="dot" style="--c:'+s.c+'">'+esc(s.l)+'</span><div><b>'+esc(s.name)+'</b><span>'+esc(s.cat)+'</span></div></div>';
 }).join('');
 
@@ -365,7 +367,7 @@ function render(){
       '<div class="ph">'+img+'</div><div class="body">'+
       '<div class="price">'+fmt(it.price)+' <small>сом.'+(it.unit && it.unit!=='шт'?' / '+esc(it.unit):'')+'</small></div>'+
       '<div class="title">'+esc(it.title)+'</div>'+
-      '<div class="meta"><span class="shop" style="--c:'+(COLOR[it.storeKey]||'#999')+'"><i></i>'+esc(it.store)+'</span>'+
+      '<div class="meta"><span class="shop" style="--c:'+(COLOR[it.storeKey]||'#999')+'"><i></i>'+esc(it.note||it.store)+'</span>'+
       (it.inStock===false?'<span class="oos">нет в наличии</span>':'<span class="go">Открыть →</span>')+'</div>'+
       '</div></a>';
   }).join('');
@@ -375,7 +377,11 @@ function render(){
     '<a target="_blank" rel="noopener" href="https://www.wildberries.tj/catalog/0/search.aspx?search='+q+'">Wildberries</a>'+
     '<a target="_blank" rel="noopener" href="https://www.ozon.ru/search/?text='+q+'">Ozon</a>'+
     '<a target="_blank" rel="noopener" href="https://lalafo.tj/tajikistan/q-'+q+'">Lalafo</a>'+
-    '<a target="_blank" rel="noopener" href="https://somon.tj/search/?q='+q+'">Somon.tj</a>';
+    '<a target="_blank" rel="noopener" href="https://somon.tj/search/?q='+q+'">Somon.tj</a>'+
+    '<a target="_blank" rel="noopener" href="https://www.instagram.com/explore/search/keyword/?q='+q+'">Instagram</a>'+
+    '<a target="_blank" rel="noopener" href="https://www.facebook.com/marketplace/search/?query='+q+'">Facebook</a>'+
+    '<a target="_blank" rel="noopener" href="https://tgstat.com/ru/search?q='+q+'">Telegram (TGStat)</a>'+
+    '<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(lastQ+' цена Душанбе')+'">Google</a>';
 }
 
 /* ---- поиск по ссылке вида ...#молоко ---- */
