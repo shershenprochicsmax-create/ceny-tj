@@ -313,14 +313,14 @@ $('f').addEventListener('submit', function(e){ e.preventDefault(); $('q').blur()
 
 function render(){
   if(!data) return;
-  var words = norm(lastQ).split(/\s+/).filter(Boolean);
+  var wsets = (data.variants && data.variants.length ? data.variants : [lastQ]).map(function(v){ return norm(v).split(/\s+/).filter(Boolean); });
   var strict = $('strict').checked, stock = $('stock').checked;
   var pool = data.items.filter(function(it){
     if(cat!=='Все' && it.cat!==cat) return false;
     if(stock && it.inStock===false) return false;
     if(!strict) return true;
     var t = norm(it.title + ' ' + (it.snippet||''));
-    return words.every(function(w){ return t.indexOf(w) >= 0; });
+    return wsets.some(function(ws){ return ws.every(function(w){ return t.indexOf(w) >= 0; }); });
   });
   var items = pool.filter(function(it){ return !hidden[it.storeKey]; });
   var s = $('sort').value;
@@ -343,7 +343,7 @@ function render(){
   var shopsN = {}; items.forEach(function(x){ shopsN[x.storeKey]=1; });
   var nShops = Object.keys(shopsN).length;
   $('found').innerHTML = esc(lastQ) + ': ' + items.length + ' ' + plural(items.length,'предложение','предложения','предложений') +
-    '<small>' + (items.length ? 'в ' + nShops + ' ' + plural(nShops,'магазине','магазинах','магазинах') + ' · цены на сейчас' : 'попробуйте другой запрос') + '</small>';
+    '<small>' + (items.length ? 'в ' + nShops + ' ' + plural(nShops,'магазине','магазинах','магазинах') + ' · цены на сейчас' : 'попробуйте другой запрос') + (data.variants && data.variants.length > 1 ? ' · искали также: «' + esc(data.variants.slice(1).join('», «')) + '»' : '') + '</small>';
 
   var bestItem = null;
   if(items.length){
