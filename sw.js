@@ -1,5 +1,5 @@
 // Кэширует оболочку приложения, чтобы оно открывалось мгновенно; цены всегда берутся из сети.
-var CACHE = 'ceny-tj-v6';
+var CACHE = 'ceny-tj-v7';
 var SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));

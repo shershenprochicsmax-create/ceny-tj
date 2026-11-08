@@ -175,7 +175,7 @@ footer{border-top:1px solid var(--line);padding-block:22px calc(22px + env(safe-
 <section class="hero">
   <div class="container">
     <h1>Сравните цены в магазинах Таджикистана</h1>
-    <p>Один поиск — цены сразу в Би1, Пайкаре, Magnit.tj, 8 MART, Alif Shop, на Somon.tj и в Telegram-каналах продаж. В сомони, с фото и ссылкой на товар.</p>
+    <p>Один поиск — цены сразу в Би1, Пайкаре, Magnit.tj, 8 MART, Alif Shop, на Somon.tj, в Telegram-каналах и по всему интернету Таджикистана. В сомони, с фото и ссылкой на товар.</p>
     <form class="search" id="f" role="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       <input id="q" type="search" placeholder="Что ищем? Например: молоко" autocomplete="off" enterkeyhint="search">
@@ -236,7 +236,7 @@ footer{border-top:1px solid var(--line);padding-block:22px calc(22px + env(safe-
 
 <script>
 var API = 'https://script.google.com/macros/s/AKfycbwEhjmRWCCHYSKtuDf4ZmS382LCnvqU65C-FiANFDFmAbPT0q4NbYyZP-97HxWLKyYE1Q/exec';
-var CATS = ['Все','Продукты','Товары','Объявления','Telegram'];
+var CATS = ['Все','Продукты','Товары','Объявления','Telegram','Интернет'];
 var QUICK = ['молоко','сахар','рис','масло','яйца','iPhone 16','холодильник','телевизор'];
 var SHOPS = [
   {key:'bi1',    name:'Би1',        cat:'Продукты',   c:'#7aa61c', l:'Б1'},
@@ -272,7 +272,7 @@ $('quick').insertAdjacentHTML('beforeend', QUICK.map(function(q){ return '<butto
 Array.prototype.forEach.call($('quick').querySelectorAll('button'), function(b){
   b.onclick = function(){ $('q').value = b.textContent; search(b.textContent); };
 });
-$('shops').innerHTML = SHOPS.filter(function(s){ return s.key!=='web'; }).map(function(s){
+$('shops').innerHTML = SHOPS.map(function(s){
   return '<div class="shopcard"><span class="dot" style="--c:'+s.c+'">'+esc(s.l)+'</span><div><b>'+esc(s.name)+'</b><span>'+esc(s.cat)+'</span></div></div>';
 }).join('');
 
@@ -319,7 +319,7 @@ function render(){
     if(cat!=='Все' && it.cat!==cat) return false;
     if(stock && it.inStock===false) return false;
     if(!strict) return true;
-    var t = norm(it.title);
+    var t = norm(it.title + ' ' + (it.snippet||''));
     return words.every(function(w){ return t.indexOf(w) >= 0; });
   });
   var items = pool.filter(function(it){ return !hidden[it.storeKey]; });
