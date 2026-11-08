@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Цены по Таджикистану</title>
+<meta name="theme-color" content="#0f7a4f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Цены TJ">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="Поиск цен по магазинам Таджикистана: продукты, техника, объявления, рестораны.">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d1d1b;--muted:#6b6a66;--line:#e4e2dc;--accent:#0f7a4f;--accent-ink:#fff;--ours:#c2410c;--ours-bg:#fff1e8;--best:#fff4d6;--best-line:#e8c35a;--err:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#141412;--card:#1e1e1b;--ink:#eeece6;--muted:#a3a19a;--line:#33322e;--accent:#3fbf86;--accent-ink:#0b1c14;--ours:#fb923c;--ours-bg:#2a1a10;--best:#2d2614;--best-line:#8a6d1f;--err:#ff8a80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 16px 10px;padding-top:max(14px, env(safe-area-inset-top))}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:18px;margin:0 0 10px;letter-spacing:-.01em}
+h1 span{color:var(--muted);font-weight:400}
+form{display:flex;gap:8px}
+input[type=search]{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+button{font:inherit;font-weight:600;padding:0 18px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tab{font-size:13px;padding:5px 12px;border:1px solid var(--line);border-radius:99px;background:var(--card);cursor:pointer;user-select:none}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tools{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
+.tools label{display:flex;gap:6px;align-items:center;cursor:pointer}
+select{font:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
+main{padding:14px 16px 40px}
+.status{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:99px;background:var(--card);cursor:pointer;user-select:none}
+.chip.off{opacity:.4;text-decoration:line-through}
+.chip.err{color:var(--err);border-color:var(--err)}
+.chip.ours{border-color:var(--ours);color:var(--ours);font-weight:600}
+.sum{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:14px}
+.box{border-radius:12px;padding:10px 14px;font-size:14px}
+.box b{font-size:16px}
+.box small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.box.best{background:var(--best);border:1px solid var(--best-line)}
+.box.ours{background:var(--ours-bg);border:1px solid var(--ours)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:inherit;text-decoration:none;transition:transform .12s}
+.card:hover{transform:translateY(-2px)}
+.card.ours{border:2px solid var(--ours)}
+.badge{position:absolute;top:8px;left:8px;background:var(--ours);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px}
+.ph{aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center}
+.ph img{max-width:100%;max-height:100%;object-fit:contain}
+.ph .no{color:#aaa;font-size:12px}
+.body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.price{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.price small{font-size:12px;font-weight:400;color:var(--muted)}
+.title{font-size:13px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.store{margin-top:auto;font-size:12px;color:var(--muted)}
+.store .oos{color:var(--err)}
+.empty{color:var(--muted);text-align:center;padding:40px 10px}
+.more{margin-top:22px;font-size:13px;color:var(--muted)}
+.more a{color:var(--accent);margin-right:12px}
+@media (max-width:480px){.grid{grid-template-columns:repeat(2,1fr);gap:8px}.price{font-size:16px}}
+</style></head><body>
+<header><div class="wrap">
+  <h1>Цены по Таджикистану <span>· онлайн-площадки</span></h1>
+  <form id="f"><input id="q" type="search" placeholder="Например: молоко, iPhone 16, ролл" autofocus>
+  <button id="go">Найти</button></form>
+  <div class="tabs" id="tabs"></div>
+  <div class="tools">
+    <label><input type="checkbox" id="strict" checked> только точные совпадения</label>
+    <label><input type="checkbox" id="stock"> только в наличии</label>
+    <label>Сортировка <select id="sort"><option value="asc">сначала дешёвые</option><option value="desc">сначала дорогие</option><option value="store">по магазину</option></select></label>
+  </div>
+</div></header>
+<main><div class="wrap">
+  <div id="status" class="status"></div>
+  <div id="sum" class="sum"></div>
+  <div id="grid" class="grid"></div>
+  <div id="msg" class="empty">Введите название товара или блюда и нажмите «Найти».</div>
+  <div id="more" class="more"></div>
+</div></main>
+<script>
+var API = 'https://script.google.com/macros/s/AKfycbwEhjmRWCCHYSKtuDf4ZmS382LCnvqU65C-FiANFDFmAbPT0q4NbYyZP-97HxWLKyYE1Q/exec';
+function loadPrices(q, ok, fail){
+  var url = API + '?q=' + encodeURIComponent(q);
+  fetch(url, {credentials:'omit'}).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(ok).catch(function(){ jsonp(url, ok, fail); });
+}
+function jsonp(url, ok, fail){
+  var cb = 'cb' + Date.now(), sc = document.createElement('script'), done = false;
+  window[cb] = function(d){ done = true; delete window[cb]; sc.remove(); ok(d); };
+  sc.onerror = function(){ if(!done){ delete window[cb]; fail(); } };
+  sc.src = url + '&callback=' + cb; document.body.appendChild(sc);
+}
+var CATS = ['Все','Продукты','Товары','Объявления','Рестораны'];
+var data = null, hidden = {}, lastQ = '', cat = 'Все';
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function norm(s){ return String(s).toLowerCase().replace(/ё/g,'е'); }
+function fmt(n){ return n.toLocaleString('ru-RU',{minimumFractionDigits: n%1?2:0, maximumFractionDigits:2}) + ' сом.'; }
+
+function drawTabs(){
+  $('tabs').innerHTML = CATS.map(function(c){ return '<span class="tab'+(c===cat?' on':'')+'" data-c="'+c+'">'+c+'</span>'; }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
+    t.onclick = function(){ cat = t.getAttribute('data-c'); drawTabs(); render(); };
+  });
+}
+drawTabs();
+
+$('f').addEventListener('submit', function(e){
+  e.preventDefault();
+  var q = $('q').value.trim(); if(!q) return;
+  lastQ = q; $('go').disabled = true; $('grid').innerHTML=''; $('sum').innerHTML=''; $('status').innerHTML=''; $('more').innerHTML='';
+  $('msg').style.display='block'; $('msg').textContent='Ищу «'+q+'» по магазинам… (обычно 5–15 секунд)';
+  loadPrices(q, function(r){ $('go').disabled=false; data=r; render(); },
+    function(err){ $('go').disabled=false; $('msg').textContent='Не удалось получить цены. Проверьте интернет и нажмите «Найти» ещё раз.'; });
+});
+['strict','stock','sort'].forEach(function(id){ $(id).addEventListener('change', render); });
+
+function render(){
+  if(!data) return;
+  var words = norm(lastQ).split(/\s+/).filter(Boolean);
+  var strict = $('strict').checked, stock = $('stock').checked;
+  var items = data.items.filter(function(it){
+    if(hidden[it.storeKey]) return false;
+    if(cat!=='Все' && it.cat!==cat) return false;
+    if(stock && it.inStock===false) return false;
+    if(!strict) return true;
+    var t = norm(it.title);
+    return words.every(function(w){ return t.indexOf(w) >= 0; });
+  });
+  var s = $('sort').value;
+  items.sort(function(a,b){
+    if(s==='desc') return b.price-a.price;
+    if(s==='store') return (b.ours-a.ours) || a.store.localeCompare(b.store) || a.price-b.price;
+    return a.price-b.price;
+  });
+
+  var srcs = data.sources.filter(function(x){ return cat==='Все' || x.cat===cat; });
+  srcs.sort(function(a,b){ return b.ours-a.ours; });
+  $('status').innerHTML = srcs.map(function(src){
+    var cls = 'chip' + (src.ours?' ours':'') + (src.error?' err':'') + (hidden[src.key]?' off':'');
+    var label = (src.ours?'★ ':'') + esc(src.name) + (src.ours?' (наш)':'') + (src.error ? ' — не ответил' : ' · ' + src.count);
+    return '<span class="'+cls+'" data-k="'+src.key+'" title="'+esc(src.error||'Нажмите, чтобы скрыть/показать')+'">'+label+'</span>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(ch){
+    ch.onclick = function(){ var k=ch.getAttribute('data-k'); hidden[k]=!hidden[k]; render(); };
+  });
+
+  var sum = '';
+  if(items.length){
+    var min = items.reduce(function(m,x){ return x.price<m.price?x:m; }, items[0]);
+    var ours = items.filter(function(x){ return x.ours; });
+    var others = items.filter(function(x){ return !x.ours; });
+    sum += '<div class="box best">Дешевле всего: <b>'+fmt(min.price)+'</b> — '+esc(min.store)+(min.ours?' (наш магазин)':'')+
+      '<small>'+esc(min.title)+'</small></div>';
+    if(ours.length){
+      var om = ours.reduce(function(m,x){ return x.price<m.price?x:m; }, ours[0]);
+      var cheaper = others.filter(function(x){ return x.price < om.price; }).length;
+      sum += '<div class="box ours">★ Наш магазин ('+esc(om.store)+'): от <b>'+fmt(om.price)+'</b>, найдено '+ours.length+
+        '<small>'+(others.length ? (cheaper ? 'У конкурентов дешевле: '+cheaper+' из '+others.length+' предложений' : 'У конкурентов дешевле не найдено') : 'У конкурентов совпадений нет')+'</small></div>';
+    } else if(data.ourStore && !hidden[data.ourStore] && (cat==='Все'||cat==='Продукты')){
+      sum += '<div class="box ours">★ В нашем магазине такого товара не найдено</div>';
+    }
+    $('msg').style.display='none';
+  } else {
+    $('msg').style.display='block';
+    $('msg').textContent = data.items.length && strict
+      ? 'Точных совпадений нет. Снимите галочку «только точные совпадения» или выберите раздел «Все».'
+      : 'Ничего не найдено. Попробуйте написать название короче или иначе (по-русски / латиницей).';
+  }
+  $('sum').innerHTML = sum;
+
+  $('grid').innerHTML = items.map(function(it){
+    var img = it.image ? '<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(it.image)+'" alt="" onerror="this.outerHTML=\'<span class=no>нет фото</span>\'">' : '<span class="no">нет фото</span>';
+    return '<a class="card'+(it.ours?' ours':'')+'" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+
+      (it.ours?'<span class="badge">★ Наш магазин</span>':'')+
+      '<div class="ph">'+img+'</div><div class="body">'+
+      '<div class="price">'+fmt(it.price)+(it.unit && it.unit!=='шт'?' <small>/ '+esc(it.unit)+'</small>':'')+'</div>'+
+      '<div class="title">'+esc(it.title)+'</div>'+
+      '<div class="store">'+esc(it.store)+(it.note?' · '+esc(it.note):'')+(it.inStock===false?' · <span class="oos">нет в наличии</span>':'')+'</div></div></a>';
+  }).join('');
+
+  var q = encodeURIComponent(lastQ);
+  $('more').innerHTML = 'Проверить вручную также: '+
+    '<a target="_blank" rel="noopener" href="https://www.wildberries.tj/catalog/0/search.aspx?search='+q+'">Wildberries</a>'+
+    '<a target="_blank" rel="noopener" href="https://www.ozon.ru/search/?text='+q+'">Ozon</a>'+
+    '<a target="_blank" rel="noopener" href="https://lalafo.tj/tajikistan/q-'+q+'">Lalafo</a>'+
+    '<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+q+'+цена+Душанбе">Google</a>';
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) { window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+</script>
+</body></html>
